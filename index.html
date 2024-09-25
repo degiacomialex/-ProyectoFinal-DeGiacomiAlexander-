@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Préstamos Personales</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <script src="js/clase.prestamo.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/api.js" defer></script>
+</head>
+<body>
+    <h1>Simulador de Préstamos Personales</h1>
+    
+    <div class="panel-login">
+        <h2>Iniciar Sesión</h2>
+        <label for="numeroDocumento">Número de Documento:</label>
+        <input type="text" id="numeroDocumento" placeholder="Ingresa tu documento" required>
+        <button id="btnLogin">Iniciar Sesión</button>
+    </div>
+
+    <div class="panel-cotizacion" style="display: none;">
+        <h2>¡Descubre tus opciones de préstamo!</h2>
+        <p>¡Simulá tu Préstamo Personal y comenzá hoy a cumplir tus metas!</p>
+
+        <label for="montoPrestamo">¿Cuánto dinero necesitas?</label>
+        <input type="number" id="montoPrestamo" placeholder="Ingresa el monto" required>
+        
+        <label for="plazoPago">¿En cuántos meses devolverás el préstamo?</label>
+        <input type="number" id="plazoPago" placeholder="Ingresa el plazo en meses" value="12" min="12" max="96" step="12" required>
+        
+        <label for="selectDestino">¿Cuál es el destino del dinero que solicitas?</label>
+        <select id="selectDestino">
+            <option disabled selected>Solicito el dinero para...</option>
+        </select>
+        
+        <button class="button-calcular" type="button">Calcular</button>
+    </div>
+
+    <div class="panel-cotizaciones">
+        <h2>Cotizaciones de Monedas</h2>
+        <div id="cotizaciones"></div>
+    </div>
+
+    <script>
+        const arrayDestinos = [
+            {id: 1, descripcion: 'Vehiculos', interes: 1.4987},
+            {id: 2, descripcion: 'Construcciones', interes: 1.3875},
+            {id: 3, descripcion: 'Viajes y vacaciones', interes: 1.6267},
+            {id: 4, descripcion: 'Otros', interes: 1.8152}
+        ];
+
+        function cargarDestinos() {
+            const selectDestinos = document.getElementById("selectDestino");
+            arrayDestinos.forEach(destino => {
+                selectDestinos.innerHTML += `<option value="${destino.descripcion}">${destino.descripcion}</option>`;
+            });
+        }
+
+        document.getElementById("btnLogin").addEventListener("click", () => {
+            const numeroDocumento = document.getElementById("numeroDocumento").value;
+            if (numeroDocumento) {
+                document.querySelector(".panel-login").style.display = "none";
+                document.querySelector(".panel-cotizacion").style.display = "flex";
+                cargarDestinos(); // Cargar destinos después del inicio de sesión
+            } else {
+                alert("Por favor, ingresa un número de documento válido.");
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", cargarDestinos);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
